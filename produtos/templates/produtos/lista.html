@@ -1,0 +1,7 @@
+<!-- produtos/templates/produtos/lista.html -->
+<h1>Lista de Produtos</h1>
+<ul>
+    {% for produto in produtos %}
+        <li>{{ produto.nome }}</li>
+    {% endfor %}
+</ul>
