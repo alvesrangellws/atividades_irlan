@@ -1,0 +1,28 @@
+{% extends "produtos/base.html" %}
+
+{% block title %}Lista de Categorias{% endblock %}
+
+{% block content %}
+<h2>Categorias</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for categoria in categorias %}
+        <tr>
+            <td>{{ categoria.nome }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td>Nenhuma categoria cadastrada.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'cadastrar_categoria' %}" class="btn btn-primary">Adicionar Categoria</a>
+<a href="{% url 'listar_produtos' %}" class="btn btn-secondary">Voltar</a>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "produtos/base.html" %}
+
+{% block title %}Lista de Produtos{% endblock %}
+
+{% block content %}
+<h2>Lista de Produtos</h2>
+
+<a href="{% url 'cadastrar_produto' %}" class="btn btn-success mb-3">Adicionar Produto</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Quantidade em Estoque</th>
+            <th>Fornecedor</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for produto in produtos %}
+        <tr>
+            <td>{{ produto.codigo }}</td>
+            <td>{{ produto.nome }}</td>
+            <td>R$ {{ produto.preco }}</td>
+            <td>{{ produto.quantidade_estoque }}</td>
+            <td>{{ produto.fornecedor.nome }}</td>
+            <td>
+                <a href="{% url 'detalhes_produto' produto.id %}" class="btn btn-info btn-sm">Detalhes</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center">Nenhum produto cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'listar_categorias' %}" class="btn btn-primary">Ver Categorias</a>
+<a href="{% url 'listar_fornecedores' %}" class="btn btn-primary">Ver Fornecedores</a>
+
+{% endblock %}
