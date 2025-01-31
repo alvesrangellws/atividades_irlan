@@ -5,6 +5,12 @@
 {% block content %}
 <h2>Adicionar Produto</h2>
 
+{% if form.errors %}
+<div class="alert alert-danger">
+    <strong>Erro!</strong> Verifique os campos abaixo.
+</div>
+{% endif %}
+
 <form method="post">
     {% csrf_token %}
     <div class="mb-3">
