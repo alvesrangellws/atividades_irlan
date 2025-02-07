@@ -4,7 +4,24 @@
 
 {% block content %}
 <h2>Lista de Produtos</h2>
-
+<form method="GET" class="mb-4">
+    <h3>Pesquisa</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" name="nome" class="form-control" placeholder="Buscar por nome" value="{{ request.GET.nome }}">
+        </div>
+        <div class="col-md-3">
+            <input type="number" step="0.01" name="preco_min" class="form-control" placeholder="Preço mínimo" value="{{ request.GET.preco_min }}">
+        </div>
+        <div class="col-md-3">
+            <input type="number" step="0.01" name="preco_max" class="form-control" placeholder="Preço máximo" value="{{ request.GET.preco_max }}">
+        </div>
+        <div class="col-md-2 d-flex">
+            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+            <a href="{% url 'listar_produtos' %}" class="btn btn-secondary w-100 ms-2">Limpar Filtros</a>
+        </div>
+    </div>
+</form>
 <a href="{% url 'cadastrar_produto' %}" class="btn btn-success mb-3">Adicionar Produto</a>
 
 <table class="table table-striped">
@@ -40,5 +57,33 @@
 
 <a href="{% url 'listar_categorias' %}" class="btn btn-primary">Ver Categorias</a>
 <a href="{% url 'listar_fornecedores' %}" class="btn btn-primary">Ver Fornecedores</a>
+
+<div>
+    <nav>
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">Primeira</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 
 {% endblock %}

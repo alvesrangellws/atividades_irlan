@@ -8,6 +8,22 @@ class ProdutoListView(ListView):
     model = Produto
     template_name = 'produtos/lista_produtos.html'
     context_object_name = 'produtos'
+    paginate_by = 5
+    
+    def get_queryset(self):
+        queryset = Produto.objects.all()
+        nome = self.request.GET.get('nome')
+        preco_min = self.request.GET.get('preco_min')
+        preco_max = self.request.GET.get('preco_max')
+
+        if preco_min and not preco_max:
+            queryset = queryset.filter(preco__gte=preco_min)
+        elif preco_max and not preco_min:
+            queryset = queryset.filter(preco__lte=preco_max)
+        elif preco_min and preco_max:
+            queryset = queryset.filter(preco__gte=preco_min, preco__lte=preco_max)
+
+        return queryset
 
 
 class ProdutoCreateView(CreateView):
