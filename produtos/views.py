@@ -16,8 +16,11 @@ class ProdutoListView(ListView):
         preco_min = self.request.GET.get('preco_min')
         preco_max = self.request.GET.get('preco_max')
 
+        if nome:
+            queryset = queryset.filter(nome__icontains=nome)
+            
         if preco_min and not preco_max:
-            queryset = queryset.filter(preco__gte=preco_min)
+             queryset = queryset.filter(preco__gte=preco_min)
         elif preco_max and not preco_min:
             queryset = queryset.filter(preco__lte=preco_max)
         elif preco_min and preco_max:
